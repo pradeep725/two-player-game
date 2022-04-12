@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <p>Game <span id="game-count">1</span></p>
+      <hr />
+      <button id="start-btn" onclick="startGame()">Start Game</button>
+      <p>Player 1 - Won <span id="player-1-score">0</span></p>
+      <p>Player 2 - Won <span id="player-2-score">0</span></p>
+      <p id="result"></p>
+    </div>
+    <script>
+      const startBtnEle = document.getElementById("start-btn");
+      const gameCountEle = document.getElementById("game-count");
+      const player1ScoreEle = document.getElementById("player-1-score");
+      const player2ScoreEle = document.getElementById("player-2-score");
+      const resultEle = document.getElementById("result");
+      let data = {
+        gameCount: 0,
+        player1Score: 0,
+        player2Score: 0,
+      };
+      const numberOfGameNeedToWin = 3;
+
+      function startGame() {
+        resultEle.innerHTML = "";
+        const power = {
+          player1: 100,
+          player2: 100,
+        };
+        while (true) {
+          // player 1 shoot
+          const shoot1 = getRandomInt(0, 5);
+          // reduce player 1 power
+          power.player1 = power.player1 - shoot1;
+          if (power.player1 <= 0) {
+            data.player1Score = data.player1Score + 1;
+            break;
+          }
+          // player 2 shoot
+          const shoot2 = getRandomInt(0, 5);
+          // reduce player 2 power
+          power.player2 = power.player2 - shoot2;
+          if (power.player2 <= 0) {
+            data.player2Score = data.player2Score + 1;
+            break;
+          }
+        }
+        data.gameCount = data.gameCount + 1;
+        gameCountEle.innerHTML = data.gameCount;
+        player1ScoreEle.innerHTML = data.player1Score;
+        player2ScoreEle.innerHTML = data.player2Score;
+        if (data.player1Score == numberOfGameNeedToWin) {
+          //   startBtnEle.style.display = "none";
+          resultEle.innerHTML = "Player 1 Won !!!!!!!";
+          // reset data
+          data = {
+            gameCount: 0,
+            player1Score: 0,
+            player2Score: 0,
+          };
+        } else if (data.player2Score == numberOfGameNeedToWin) {
+          resultEle.innerHTML = "Player 2 Won !!!!!!!";
+          // reset data
+          data = {
+            gameCount: 0,
+            player1Score: 0,
+            player2Score: 0,
+          };
+        }
+      }
+
+      function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+      console.log("hello");
+    </script>
+  </body>
+</html>
